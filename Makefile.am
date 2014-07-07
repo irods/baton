@@ -10,6 +10,8 @@ if HAVE_CHECK
 MAYBE_CHECK = tests
 endif
 
+#AM_LDFLAGS=-L/usr/lib/irods -lRodsAPIs -lgssapi_krb5 -lpthread -lstdc++ -lm -lirods_client -lboost_system -lboost_filesystem -lboost_regex -lboost_thread -ldl -lssl -lcrypto
+
 SUBDIRS = src . $(MAYBE_CHECK) $(MAYBE_DOC)
 
 pkgconfigdir = $(libdir)/pkgconfig

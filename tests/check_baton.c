@@ -20,7 +20,7 @@
 #include <assert.h>
 #include <unistd.h>
 
-#include <jansson.h>
+#include "jansson.h"
 #include <check.h>
 
 #include "../src/baton.h"

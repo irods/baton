@@ -20,9 +20,9 @@ AC_CONFIG_MACRO_DIR([m4])
 # a path added by ACLOCAL_AMFLAGS in Makefile.am
 
 # Unit tests using the check library
-PKG_CHECK_MODULES([CHECK], [check >= 0.9.4], [check_present=yes],
-                  [check_present=no])
-AM_CONDITIONAL(HAVE_CHECK, test "x$check_present" = "xyes")
+#PKG_CHECK_MODULES([CHECK], [check >= 0.9.4], [check_present=yes],
+#                  [check_present=no])
+#AM_CONDITIONAL(HAVE_CHECK, test "x$check_present" = "xyes")
 
 # Sphinx documentation build (HTML manual and manpage)
 AC_ARG_VAR([SPHINXBUILD], [Sphinx documentation builder])
@@ -63,17 +63,69 @@ fi
 AM_CONDITIONAL(COVERAGE_ENABLED, [test "x${coverage_enabled}" = "xyes"])
 
 # Required library checks
+AC_CHECK_LIB([rt], [timer_create])
+AC_CHECK_LIB([m], [floor])
 AC_CHECK_LIB([pthread], [pthread_kill])
 AC_CHECK_LIB([gssapi_krb5], [gss_acquire_cred])
 
-AC_CHECK_LIB([RodsAPIs], [getRodsEnvFileName], [],
+AC_CHECK_LIB([crypto], [EVP_EncryptUpdate], [],
+             [AC_MSG_ERROR([
+-----------------------------------------------
+Unable to find the required crypto library
+-----------------------------------------------])
+])
+
+AC_CHECK_LIB([ssl], [SSL_get_error], [],
+             [AC_MSG_ERROR([
+-----------------------------------------------
+Unable to find the required SSL library
+-----------------------------------------------])
+])
+
+AC_CHECK_LIB([boost_regex], [regcompA], [],
+             [AC_MSG_ERROR([
+-----------------------------------------------
+Unable to find boost_regex shared library. 
+-----------------------------------------------])
+], [-lstdc++])
+
+AC_CHECK_LIB([boost_system], [_ZN5boost6system15system_categoryEv], [],
+             [AC_MSG_ERROR([
+-----------------------------------------------
+Unable to find boost_system shared library. 
+-----------------------------------------------])
+], [-lboost_system -lstdc++ ])
+
+AC_CHECK_LIB([boost_thread], [_ZN5boost11this_thread5yieldEv], [],
+             [AC_MSG_ERROR([
+-----------------------------------------------
+Unable to find boost_thread shared library. 
+-----------------------------------------------])
+], [ -lboost_system -lstdc++ ])
+
+AC_CHECK_LIB([boost_filesystem], [_ZNK5boost10filesystem4path3endEv], [],
+             [AC_MSG_ERROR([
+-----------------------------------------------
+Unable to find boost_filesystem shared library. 
+-----------------------------------------------])
+], [-lboost_system -lstdc++ ])
+
+AC_CHECK_LIB([irods_client_api], [_ZN5irods14get_pack_tableEv], [],
+             [AC_MSG_ERROR([
+-----------------------------------------------
+Unable to find iRODS API Client shared library. 
+-----------------------------------------------])
+], [-rdynamic -lpthread -lgssapi_krb5 -lm -lirods_client -lboost_system -lboost_filesystem -lboost_regex -lboost_thread -ldl -lssl -lcrypto -lstdc++ ])
+
+#AC_CHECK_LIB([RodsAPIs], [getRodsEnvFileName], [],
+AC_CHECK_LIB([irods_client], [getRodsEnvFileName], [],
              [AC_MSG_ERROR([
 -----------------------------------------------
 Unable to find iRODS shared library. Please
 ensure that you have configured the location of
 your iRODS installation
 -----------------------------------------------])
-], [-lpthread -lgssapi_krb5])
+], [-rdynamic -lirods_client_api -lpthread -lgssapi_krb5 -lm -lboost_system -lboost_filesystem -lboost_regex -lboost_thread -ldl -lssl -lcrypto -lstdc++ ])
 
 AC_CHECK_LIB([jansson], [json_unpack], [],
              [AC_MSG_ERROR([
@@ -82,6 +134,11 @@ Unable to find the required JSON library
 jannson. Please ensure that it is installed.
 -----------------------------------------------])
 ])
+
+AC_SUBST( [CHECK_LIBS], [-lcheck_pic])
+AC_SUBST( [CHECK_CFLAGS], [])
+AC_CHECK_LIB([check_pic], [ck_do_nothing], [check_present=yes], [check_present=no])
+AM_CONDITIONAL(HAVE_CHECK, test "x$check_present" = "xyes")
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([src/baton.h])

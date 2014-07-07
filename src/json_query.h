@@ -21,7 +21,7 @@
 #ifndef _BATON_JSON_QUERY_H
 #define _BATON_JSON_QUERY_H
 
-#include "rodsClient.h"
+#include "rodsClient.hpp"
 #include <jansson.h>
 
 #include "error.h"

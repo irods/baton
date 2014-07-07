@@ -21,9 +21,9 @@
 #ifndef _BATON_H
 #define _BATON_H
 
-#include "rcConnect.h"
-#include "rodsClient.h"
-#include "rodsPath.h"
+#include "rcConnect.hpp"
+#include "rodsClient.hpp"
+#include "rodsPath.hpp"
 #include <jansson.h>
 
 #include "config.h"

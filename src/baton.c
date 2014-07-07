@@ -26,10 +26,10 @@
 #include <string.h>
 
 #include <jansson.h>
-#include "rodsType.h"
-#include "rodsErrorTable.h"
-#include "rodsClient.h"
-#include "miscUtil.h"
+#include "rodsType.hpp"
+#include "rodsErrorTable.hpp"
+#include "rodsClient.hpp"
+#include "miscUtil.hpp"
 
 #include "baton.h"
 #include "error.h"
@@ -119,7 +119,9 @@ rcComm_t *rods_login(rodsEnv *env) {
         goto error;
     }
 
-    status = clientLogin(conn);
+    init_client_api_table();
+
+    status = clientLogin(conn, "", "");
     if (status < 0) {
         log(ERROR, "Failed to log in to iRODS");
         goto error;

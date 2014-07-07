@@ -21,7 +21,7 @@
 #ifndef _BATON_QUERY_H
 #define _BATON_QUERY_H
 
-#include "rodsClient.h"
+#include "rodsClient.hpp"
 
 #include "log.h"
 #include "utilities.h"

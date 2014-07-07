@@ -22,7 +22,7 @@
 #define _BATON_JSON_H
 
 #include <jansson.h>
-#include "rodsClient.h"
+#include "rodsClient.hpp"
 
 #include "error.h"
 

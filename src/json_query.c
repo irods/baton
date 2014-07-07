@@ -18,7 +18,7 @@
  * @author Keith James <kdj@sanger.ac.uk>
  */
 
-#include "rodsClient.h"
+#include "rodsClient.hpp"
 #include <jansson.h>
 
 #include "baton.h"

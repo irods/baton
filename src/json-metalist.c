@@ -21,8 +21,8 @@
 #include <stdlib.h>
 #include <getopt.h>
 
-#include "rodsClient.h"
-#include "rodsPath.h"
+#include "rodsClient.hpp"
+#include "rodsPath.hpp"
 #include <jansson.h>
 
 #include "baton.h"

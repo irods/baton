@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # This script is run on fixture setup. It copies test data to iRODS
 # and if provided with a file of imeta commands, executes imeta to add
@@ -13,7 +13,7 @@ in_path=$1
 out_path=$2
 meta_path=$3
 
-if [ $# -lt 2 ]
+if [[ $# -lt 2 ]]
 then
     echo "Insufficient command line arguments; expected 2 or 3"
     exit $E_ARGS_MISSING

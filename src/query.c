@@ -22,7 +22,7 @@
 #include <errno.h>
 #include <libgen.h>
 #include <string.h>
-#include "rodsClient.h"
+#include "rodsClient.hpp"
 
 #include "log.h"
 #include "query.h"

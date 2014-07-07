@@ -22,8 +22,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "rodsClient.h"
-#include "rodsPath.h"
+#include "rodsClient.hpp"
+#include "rodsPath.hpp"
 
 #include "baton.h"
 #include "config.h"
